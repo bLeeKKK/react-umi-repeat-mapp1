@@ -1,0 +1,40 @@
+@import '~antd/es/style/themes/default.less';
+
+.container {
+  display: flex;
+  background: @layout-body-background;
+  flex-direction: column;
+}
+
+.lang {
+  text-align: right;
+  height: 40px;
+  line-height: 44px;
+
+  :global(.ant-dropdown-trigger) {
+    margin-right: 24px;
+  }
+}
+
+.content {}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+}
+
+.title {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 600;
+  font-size: 33px;
+  font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+}
+
+.logo {
+  vertical-align: middle;
+  height: 40px;
+  margin-right: 16px;
+}
