@@ -1,10 +1,20 @@
 import React, { useState } from "react"
 import styles from './styles.less'
 import ProForm, { ProFormText, ProFormCaptcha, ProFormDateRangePicker, ProFormSelect } from '@ant-design/pro-form'
-import { useIntl, connect, FormattedMessage } from 'umi'
+import { useIntl, connect, FormattedMessage, ConnectProps } from 'umi'
 import { Tabs } from 'antd'
+import {
+  AlipayCircleOutlined,
+  LockOutlined,
+  MailOutlined,
+  MobileOutlined,
+  TaobaoCircleOutlined,
+  UserOutlined,
+  WeiboCircleOutlined,
+} from '@ant-design/icons'
+import { ConnectState } from "@/models/connect"
 
-const User: React.FC<{}> = () => {
+const Login: React.FC<{}> = (poprs) => {
   const [type, setType] = useState<string>("account")
   const intl = useIntl()
 
@@ -49,6 +59,10 @@ const User: React.FC<{}> = () => {
         {
           type === "account" && <>
             <ProFormText
+              fieldProps={{
+                size: 'large',
+                prefix: <UserOutlined className={styles.prefixIcon} />
+              }}
               name="userName"
               placeholder={intl.formatMessage({
                 id: "pages.login.username.placeholder",
@@ -56,6 +70,10 @@ const User: React.FC<{}> = () => {
               })}
             />
             <ProFormText.Password
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined className={styles.prefixIcon} />
+              }}
               name="password"
               placeholder={intl.formatMessage({
                 id: "pages.login.password.placeholder",
@@ -68,14 +86,22 @@ const User: React.FC<{}> = () => {
         {
           type === "mobile" && <>
             <ProFormText
-              name="phone"
+              fieldProps={{
+                size: 'large',
+                prefix: <MobileOutlined className={styles.prefixIcon} />,
+              }}
+              name="phoneNumber"
               placeholder={intl.formatMessage({
-                id: "pages.login.username.placeholder",
-                defaultMessage: 'Account password login',
+                id: "pages.login.phoneNumber.placeholder",
+                defaultMessage: 'phone number',
               })}
             />
             <ProFormCaptcha
               name="captcha"
+              fieldProps={{
+                size: 'large',
+                prefix: <MailOutlined className={styles.prefixIcon} />,
+              }}
               captchaTextRender={(timing, count) => {
                 if (timing) {
                   return `${count} ${intl.formatMessage({
@@ -89,7 +115,7 @@ const User: React.FC<{}> = () => {
                 });
               }}
               placeholder={intl.formatMessage({
-                id: "pages.login.password.placeholder",
+                id: "pages.login.captcha.placeholder",
                 defaultMessage: 'Account password login',
               })}
 
@@ -115,4 +141,7 @@ const User: React.FC<{}> = () => {
   </>
 }
 
-export default User
+export default connect(({ login, loading }: ConnectState) => ({
+  useLogin: login,
+  submitting: loading.effects['login/login'],
+}))(Login)
