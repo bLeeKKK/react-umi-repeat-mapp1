@@ -13,12 +13,18 @@ import {
   WeiboCircleOutlined,
 } from '@ant-design/icons'
 import { ConnectState } from "@/models/connect"
+import type { LoginParamsType } from '@/services/login'
 
-const Login: React.FC<{}> = (poprs) => {
+const Login: React.FC<ConnectProps> = ({ dispatch }) => {
   const [type, setType] = useState<string>("account")
   const intl = useIntl()
 
-  const handleSubmit = () => { }
+  const handleSubmit = (val: LoginParamsType) => {
+    dispatch!({
+      type: 'login/login',
+      payload: { ...val, type }
+    })
+  }
   const handleType = (val: string) => {
     setType(val)
   }
@@ -29,15 +35,15 @@ const Login: React.FC<{}> = (poprs) => {
         submitter={{
           render: (_, dom) => dom.pop(),
           submitButtonProps: {
-            loading: true,
+            // loading: true,
             size: "large",
             style: { width: "100%" }
           }
         }}
-      // onFinish={(values) => {
-      //   handleSubmit(values)
-      //   return Promise.resolve()
-      // }}
+        onFinish={(values: LoginParamsType) => {
+          handleSubmit(values)
+          return Promise.resolve()
+        }}
       >
         <Tabs activeKey={type} onChange={handleType}>
           <Tabs.TabPane

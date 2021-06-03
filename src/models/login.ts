@@ -1,4 +1,5 @@
 import type { Effect, Reducer } from 'umi'
+import { fakeAccountLogin } from '@/services/login'
 
 export type StateType = {
   status?: string,
@@ -26,7 +27,8 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      console.log(payload, '這裏是登錄')
+      const res = yield call(fakeAccountLogin, payload)
+      console.log(res, '這裏是登錄')
     },
     *logout({ payload }, { call, put }) { }
   },

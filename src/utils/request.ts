@@ -77,13 +77,13 @@ request.interceptors.request.use(async (url, options) => {
 })
 
 // response拦截器, 处理response
-// request.interceptors.response.use((response, options) => {
-//   let token = response.headers.get("x-auth-token");
-//   if (token) {
-//     localStorage.setItem("x-auth-token", token);
-//   }
-//   return response;
-// });
+request.interceptors.response.use((response, options) => {
+  let token = response.headers.get("x-auth-token");
+  if (token) {
+    localStorage.setItem("x-auth-token", token);
+  }
+  return response;
+});
 
 
 export default request;
